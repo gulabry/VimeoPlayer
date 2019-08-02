@@ -1,24 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Video Selection View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="VideoSelectionViewController" customModule="VimeoPlayer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yfz-Sv-2lO">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="videoCell" rowHeight="251" id="h3g-IQ-yzx" customClass="VideoTableViewCell" customModule="VimeoPlayer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="251"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="h3g-IQ-yzx" id="fV2-YB-mAB">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="251"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCv-Ho-9BE">
+                                                    <rect key="frame" x="306" y="206.5" width="40" height="40"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="gCv-Ho-9BE" secondAttribute="height" multiplier="1:1" id="E9V-nI-VlI"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" image="up"/>
+                                                    <connections>
+                                                        <action selector="likeVideo:" destination="h3g-IQ-yzx" eventType="touchUpInside" id="InO-ac-4sr"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dNS-VD-Qkg">
+                                                    <rect key="frame" x="354" y="206.5" width="40" height="40"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="dNS-VD-Qkg" secondAttribute="height" multiplier="1:1" id="f4J-jz-JLu"/>
+                                                        <constraint firstAttribute="height" constant="40" id="q5E-mF-Vxg"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" image="down"/>
+                                                    <connections>
+                                                        <action selector="dislikeVideo:" destination="h3g-IQ-yzx" eventType="touchUpInside" id="uTQ-Mo-EvR"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cb3-uw-Thw">
+                                                    <rect key="frame" x="20" y="231" width="31" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="UgO-QW-mWb"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3c-bx-5Kn">
+                                                    <rect key="frame" x="20" y="208" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="g21-8T-yzO" customClass="VideoPlayerView" customModule="VimeoPlayer" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="11" width="374" height="189.5"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="37X-UT-tde">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="189.5"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="37X-UT-tde" firstAttribute="top" secondItem="g21-8T-yzO" secondAttribute="top" id="8YF-Zm-pZx"/>
+                                                        <constraint firstAttribute="bottom" secondItem="37X-UT-tde" secondAttribute="bottom" id="Ccs-z6-N35"/>
+                                                        <constraint firstAttribute="trailing" secondItem="37X-UT-tde" secondAttribute="trailing" id="OPH-iC-rTY"/>
+                                                        <constraint firstAttribute="height" constant="189.5" id="f3T-uf-9Df"/>
+                                                        <constraint firstItem="37X-UT-tde" firstAttribute="leading" secondItem="g21-8T-yzO" secondAttribute="leading" id="rqm-ck-ZbD"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outlet property="thumbnailImageView" destination="37X-UT-tde" id="LFc-Jw-kLZ"/>
+                                                    </connections>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cb3-uw-Thw" firstAttribute="top" secondItem="g3c-bx-5Kn" secondAttribute="bottom" constant="2" id="2BZ-gl-D5A"/>
+                                                <constraint firstItem="gCv-Ho-9BE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g3c-bx-5Kn" secondAttribute="trailing" constant="8" id="6WV-QP-QDv"/>
+                                                <constraint firstItem="gCv-Ho-9BE" firstAttribute="centerY" secondItem="dNS-VD-Qkg" secondAttribute="centerY" id="7DS-oE-59l"/>
+                                                <constraint firstItem="gCv-Ho-9BE" firstAttribute="height" secondItem="dNS-VD-Qkg" secondAttribute="height" id="93P-r0-aIM"/>
+                                                <constraint firstItem="g21-8T-yzO" firstAttribute="top" secondItem="fV2-YB-mAB" secondAttribute="topMargin" id="AUW-Gv-awe"/>
+                                                <constraint firstItem="gCv-Ho-9BE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cb3-uw-Thw" secondAttribute="trailing" constant="8" id="BmG-Gi-0bs"/>
+                                                <constraint firstAttribute="trailing" secondItem="dNS-VD-Qkg" secondAttribute="trailing" constant="20" id="EyZ-to-e5g"/>
+                                                <constraint firstItem="g3c-bx-5Kn" firstAttribute="top" secondItem="g21-8T-yzO" secondAttribute="bottom" constant="7.5" id="JSn-P3-QjV"/>
+                                                <constraint firstItem="g21-8T-yzO" firstAttribute="trailing" secondItem="fV2-YB-mAB" secondAttribute="trailingMargin" id="JTW-K0-7Bj"/>
+                                                <constraint firstAttribute="bottom" secondItem="cb3-uw-Thw" secondAttribute="bottom" constant="5" id="K8u-wa-Lm0"/>
+                                                <constraint firstItem="g3c-bx-5Kn" firstAttribute="leading" secondItem="fV2-YB-mAB" secondAttribute="leading" constant="20" id="KHg-5m-b7q"/>
+                                                <constraint firstItem="cb3-uw-Thw" firstAttribute="leading" secondItem="fV2-YB-mAB" secondAttribute="leading" constant="20" id="fan-hb-DYV"/>
+                                                <constraint firstItem="dNS-VD-Qkg" firstAttribute="leading" secondItem="gCv-Ho-9BE" secondAttribute="trailing" constant="8" id="gWP-vb-FQf"/>
+                                                <constraint firstItem="g21-8T-yzO" firstAttribute="leading" secondItem="fV2-YB-mAB" secondAttribute="leadingMargin" id="kJZ-Vh-aYH"/>
+                                                <constraint firstItem="dNS-VD-Qkg" firstAttribute="top" secondItem="g21-8T-yzO" secondAttribute="bottom" constant="6" id="sSH-0q-ZjH"/>
+                                                <constraint firstItem="g21-8T-yzO" firstAttribute="centerX" secondItem="fV2-YB-mAB" secondAttribute="centerX" id="xY8-Gq-iaH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="dislikeButton" destination="dNS-VD-Qkg" id="jXv-ed-Mgl"/>
+                                            <outlet property="likeButton" destination="gCv-Ho-9BE" id="mdR-pV-Xui"/>
+                                            <outlet property="videoPlayerView" destination="g21-8T-yzO" id="Rzb-9S-8x8"/>
+                                            <outlet property="videoSubtitleLabel" destination="cb3-uw-Thw" id="Dnc-gz-5eR"/>
+                                            <outlet property="videoTitleLabel" destination="g3c-bx-5Kn" id="VV5-G5-QI0"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Yfz-Sv-2lO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="euB-Va-uNg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Yfz-Sv-2lO" secondAttribute="bottom" id="fyq-cr-3hq"/>
+                            <constraint firstItem="Yfz-Sv-2lO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jIE-uJ-vTm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Yfz-Sv-2lO" secondAttribute="trailing" id="p2E-gf-uPG"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="Yfz-Sv-2lO" id="ULA-WX-Tqq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-74" y="-9"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="down" width="100" height="100"/>
+        <image name="up" width="100" height="100"/>
+    </resources>
 </document>
