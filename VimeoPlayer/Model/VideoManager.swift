@@ -18,6 +18,8 @@ struct Constants {
 
 class VideoManager {
     
+    static let shared = VideoManager()
+    
     var videos: [Video]!
     
     var thumbnailImages = [String: UIImage]()
@@ -29,7 +31,15 @@ class VideoManager {
     
     init(with videos: [Video]) {
         self.videos = videos
-        
+        commonInit()
+    }
+    
+    init() {
+        self.videos = [Video]()
+        commonInit()
+    }
+    
+    func commonInit() {
         if let likedArray = UserDefaults.standard.value(forKey: Constants.likedVideoKey) as? [String] {
             likedVideos = likedArray
         }
@@ -45,6 +55,18 @@ class VideoManager {
     
     func numberOfVideos() -> Int {
         return videos.count
+    }
+    
+    func set(videos: [Video]) {
+        self.videos = videos
+    }
+    
+    func addThumbnail(image: UIImage, for link: String) {
+        thumbnailImages[link] = image
+    }
+    
+    func add(videoURL: URL, for videoLink: String) {
+        downloadedVideos[videoLink] = videoURL
     }
     
     func like(at index: Int) {
@@ -65,7 +87,7 @@ class VideoManager {
         UserDefaults.standard.set(dislikedVideos, forKey: Constants.dislikedVideoKey)
     }
     
-    func downloadImage(from url: URL, completion: @escaping (UIImage?) -> ()) {
+    static func downloadImage(from url: URL, completion: @escaping (UIImage?) -> ()) {
         getThumbnailData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
@@ -74,7 +96,7 @@ class VideoManager {
         }
     }
     
-    private func getThumbnailData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+    static private func getThumbnailData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
 }

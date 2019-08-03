@@ -14,7 +14,7 @@ class VideoSelectionViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var videoManager: VideoManager!
+    var videoManager = VideoManager.shared
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,7 @@ class VideoSelectionViewController: UIViewController {
             
             guard videos.count > 0 else { return }
             
-            self.videoManager = VideoManager(with: videos)
+            self.videoManager.set(videos: videos)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -52,48 +52,6 @@ extension VideoSelectionViewController: UITableViewDataSource {
         
         cell.setup(with: video)
         
-        if videoManager.likedVideos.contains(video.link) {
-            cell.setLiked()
-        }
-        
-        if videoManager.dislikedVideos.contains(video.link) {
-            cell.setDisliked()
-        }
-        
-        if let image = videoManager.thumbnailImages[video.link] {
-            cell.videoPlayerView.thumbnailImageView.image = image
-        }
-        
-        if let videoURL = videoManager.downloadedVideos[video.link] {
-            
-            cell.videoPlayerView.player = AVPlayer(playerItem: AVPlayerItem(asset: AVAsset(url: videoURL)))
-            
-        } else {
-                    
-            HCVimeoVideoExtractor.fetchVideoURLFrom(url: URL(string: video.link)!, completion: { videoFile, error in
-
-                if let thumbnailURL = (videoFile?.thumbnailURL.values.compactMap { $0 }.last) {
-                    self.videoManager.downloadImage(from: thumbnailURL, completion: { image in
-                        cell.videoPlayerView.thumbnailImageView.image = image
-                        self.videoManager.thumbnailImages[video.link] = image
-                    })
-                }
-                
-                if let videoURL = videoFile?.videoURL[.Quality360p] {
-                    DispatchQueue.main.async {
-                        let playerItem = AVPlayerItem(asset: AVAsset(url: videoURL))
-                        cell.videoPlayerView.player = AVPlayer(playerItem: playerItem)
-                        self.videoManager.downloadedVideos[video.link] = videoURL
-                        
-                        if indexPath.row == 0 {
-                            cell.videoPlayerView.player?.play()
-                            cell.videoPlayerView.thumbnailImageView.isHidden = true
-                        }
-                    }
-                }
-            })
-        }
-        
         return cell
     }
     
@@ -109,11 +67,9 @@ extension VideoSelectionViewController: UITableViewDataSource {
             let cellRect = tableView.rectForRow(at: indexPath).offsetBy(dx: -tableView.contentOffset.x, dy: -tableView.contentOffset.y)
             
             if cellRect.minY > -1 && cellRect.minY < cellRect.height {
-                cell.videoPlayerView.thumbnailImageView.isHidden = true
-                cell.videoPlayerView.player?.play()
+                cell.play()
             } else {
-                cell.videoPlayerView.player?.pause()
-                cell.videoPlayerView.thumbnailImageView.isHidden = false
+                cell.pause()
             }
         }
     }
