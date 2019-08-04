@@ -21,9 +21,8 @@ class VideoManager {
     static let shared = VideoManager()
     
     var videos: [Video]!
-    
+
     var thumbnailImages = [String: UIImage]()
-    var downloadedVideos = [String:URL]()
     
     var likedVideos = [String]()
     
@@ -63,10 +62,6 @@ class VideoManager {
     
     func addThumbnail(image: UIImage, for link: String) {
         thumbnailImages[link] = image
-    }
-    
-    func add(videoURL: URL, for videoLink: String) {
-        downloadedVideos[videoLink] = videoURL
     }
     
     func like(at index: Int) {

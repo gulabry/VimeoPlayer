@@ -18,6 +18,8 @@
 		C24047EB22F128E1009F5972 /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24047EA22F128E1009F5972 /* VideoTableViewCell.swift */; };
 		C24576C922F144AC00783FFF /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24576C822F144AC00783FFF /* VideoPlayerView.swift */; };
 		C27B19B222F39E0C00A3BC12 /* VideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27B19B122F39E0C00A3BC12 /* VideoManager.swift */; };
+		C2E8282322F6445100A1A0E7 /* VideoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E8282222F6445100A1A0E7 /* VideoPageViewController.swift */; };
+		C2F0CE0C22F630BF0067E49C /* ScaleSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F0CE0B22F630BF0067E49C /* ScaleSegue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		C24047EA22F128E1009F5972 /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
 		C24576C822F144AC00783FFF /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		C27B19B122F39E0C00A3BC12 /* VideoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoManager.swift; sourceTree = "<group>"; };
+		C2E8282222F6445100A1A0E7 /* VideoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPageViewController.swift; sourceTree = "<group>"; };
+		C2F0CE0B22F630BF0067E49C /* ScaleSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleSegue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,13 +93,12 @@
 			isa = PBXGroup;
 			children = (
 				C23F821622F116E80070F80E /* AppDelegate.swift */,
-				C23F821822F116E80070F80E /* VideoSelectionViewController.swift */,
+				C2F0CE0922F627D50067E49C /* Controllers */,
 				C24047EC22F12902009F5972 /* Views */,
 				C23F822D22F119C60070F80E /* Model */,
 				C23F822A22F117230070F80E /* Network */,
-				C23F821A22F116E80070F80E /* Main.storyboard */,
+				C2F0CE0A22F630A30067E49C /* Segues */,
 				C23F821D22F116E90070F80E /* Assets.xcassets */,
-				C23F821F22F116E90070F80E /* LaunchScreen.storyboard */,
 				C23F822222F116E90070F80E /* Info.plist */,
 			);
 			path = VimeoPlayer;
@@ -121,6 +124,8 @@
 		C24047EC22F12902009F5972 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C23F821F22F116E90070F80E /* LaunchScreen.storyboard */,
+				C23F821A22F116E80070F80E /* Main.storyboard */,
 				C24576C822F144AC00783FFF /* VideoPlayerView.swift */,
 				C24047ED22F1290B009F5972 /* Cells */,
 			);
@@ -133,6 +138,23 @@
 				C24047EA22F128E1009F5972 /* VideoTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		C2F0CE0922F627D50067E49C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C2E8282222F6445100A1A0E7 /* VideoPageViewController.swift */,
+				C23F821822F116E80070F80E /* VideoSelectionViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C2F0CE0A22F630A30067E49C /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				C2F0CE0B22F630BF0067E49C /* ScaleSegue.swift */,
+			);
+			path = Segues;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,10 +277,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2E8282322F6445100A1A0E7 /* VideoPageViewController.swift in Sources */,
 				C23F821922F116E80070F80E /* VideoSelectionViewController.swift in Sources */,
 				C23F822C22F119B30070F80E /* Video.swift in Sources */,
 				C23F821722F116E80070F80E /* AppDelegate.swift in Sources */,
 				C27B19B222F39E0C00A3BC12 /* VideoManager.swift in Sources */,
+				C2F0CE0C22F630BF0067E49C /* ScaleSegue.swift in Sources */,
 				C23F822922F117200070F80E /* VimeoAPI.swift in Sources */,
 				C24047EB22F128E1009F5972 /* VideoTableViewCell.swift in Sources */,
 				C24576C922F144AC00783FFF /* VideoPlayerView.swift in Sources */,

@@ -16,7 +16,10 @@ protocol VideoTableViewCellDelegate: AnyObject {
     func dislikeTapped(_ cell: VideoTableViewCell)
 }
 
-class VideoTableViewCell : UITableViewCell {
+class VideoTableViewCell : UITableViewCell, ViewScalable {
+    
+    static let identifier = "videoCell"
+    
     @IBOutlet weak var videoPlayerView: VideoPlayerView!
     @IBOutlet weak var videoTitleLabel: UILabel!
     @IBOutlet weak var videoSubtitleLabel: UILabel!
@@ -24,6 +27,12 @@ class VideoTableViewCell : UITableViewCell {
     @IBOutlet weak var dislikeButton: UIButton!
     
     public weak var delegate: VideoTableViewCellDelegate?
+    
+    //  View Scalable Protocol View
+    //
+    var scaleView: UIView {
+        return videoPlayerView
+    }
     
     @IBAction func likeVideo(_ sender: UIButton) {
         delegate?.likeTapped(self)
@@ -75,7 +84,7 @@ class VideoTableViewCell : UITableViewCell {
             videoPlayerView.thumbnailImageView.image = image
         }
         
-        if let videoURL = VideoManager.shared.downloadedVideos[video.link] {
+        if let videoURL = video.streamURL {
             videoPlayerView.player = AVPlayer(playerItem: AVPlayerItem(asset: AVAsset(url: videoURL)))
         } else {
             load(video: video)
@@ -84,28 +93,26 @@ class VideoTableViewCell : UITableViewCell {
     
     func load(video: Video) {
         
-        guard let videoURL = URL(string: video.link) else { return }
-        
-        HCVimeoVideoExtractor.fetchVideoURLFrom(url: videoURL, completion: { videoFile, error in
-
-            if let thumbnailURL = (videoFile?.thumbnailURL.values.compactMap { $0 }.last) {
-                
+        video.getMetadata {
+            
+            if let thumbnailURL = video.thumbnailURL {
                 VideoManager.downloadImage(from: thumbnailURL, completion: { image in
                     guard let image = image else { return }
-                    self.videoPlayerView.thumbnailImageView.image = image
+                    DispatchQueue.main.async {
+                        self.videoPlayerView.thumbnailImageView.image = image
+                    }
                     VideoManager.shared.addThumbnail(image: image, for: video.link)
                 })
             }
             
             //  streaming the lowest quality video for bandwidth purposes
             //
-            if let videoURL = (videoFile?.videoURL.values.compactMap { $0 }.first) {
+            if let videoURL = video.streamURL {
+                let playerItem = AVPlayerItem(asset: AVAsset(url: videoURL))
                 DispatchQueue.main.async {
-                    let playerItem = AVPlayerItem(asset: AVAsset(url: videoURL))
                     self.videoPlayerView.player = AVPlayer(playerItem: playerItem)
-                    VideoManager.shared.add(videoURL: videoURL, for: video.link)
                 }
             }
-        })
+        }
     }
 }

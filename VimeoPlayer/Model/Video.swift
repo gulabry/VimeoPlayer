@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import HCVimeoVideoExtractor
 
 struct VideoResponse: Codable {
     var page: Int
@@ -22,9 +23,40 @@ struct Paging: Codable {
     var last: String
 }
 
-struct Video: Codable {
+class Video: Codable, Equatable {
+    
     var name: String
     var description: String?
     var link: String
     var duration: Int
+    
+    var thumbnailURL: URL?
+    var streamURL: URL?
+    
+    func getMetadata(completion: @escaping () -> ()) {
+        
+        guard let videoURL = URL(string: link) else { return }
+        
+        HCVimeoVideoExtractor.fetchVideoURLFrom(url: videoURL, completion: { videoFile, error in
+            
+            if let thumbnailURL = (videoFile?.thumbnailURL.values.compactMap { $0 }.first) {
+                self.thumbnailURL = thumbnailURL
+            }
+            
+            if let videoURL = (videoFile?.videoURL.values.compactMap { $0 }.first) {
+                self.streamURL = videoURL
+            }
+            
+            completion()
+        })
+    }
+    
+    static func == (lhs: Video, rhs: Video) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.description == rhs.description &&
+            lhs.link == rhs.link &&
+            lhs.duration == rhs.duration
+    }
 }
+
+
