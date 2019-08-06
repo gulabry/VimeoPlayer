@@ -94,7 +94,6 @@ class VideoTableViewCell : UITableViewCell, ViewScalable {
         
         if let videoURL = video.streamURL {
             videoPlayerView.player = AVPlayer(playerItem: AVPlayerItem(asset: AVAsset(url: videoURL)))
-            play()
             return
         }
         
