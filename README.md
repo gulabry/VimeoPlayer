@@ -1,5 +1,7 @@
 # VimeoPlayer
 
+- Disclosure: Some videos from the Vimeo API do not load properally.
+
 ### Architecture:
 
 - I am using a basic MVC style along with certain manager classes to handle loading of assets and model data.
