@@ -25,6 +25,8 @@ class VideoSelectionViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
+        
+        
         VimeoAPI.fetchVideos(from: VimeoAPI.comedyVideoURL) { videos in
             
             guard videos.count > 0 else { return }

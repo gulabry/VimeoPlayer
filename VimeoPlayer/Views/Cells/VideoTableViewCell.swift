@@ -63,14 +63,13 @@ class VideoTableViewCell : UITableViewCell, ViewScalable {
     }
     
     override func prepareForReuse() {
-        isSelected = false
-        isHighlighted = false
-        
         videoPlayerView.thumbnailImageView.image = nil
         videoPlayerView.player = nil
     }
     
     func setup(with video: Video) {
+        
+        selectionStyle = .none
         likeButton.tintColor = #colorLiteral(red: 0.07057534903, green: 0.07059565932, blue: 0.07057406753, alpha: 1)
         dislikeButton.tintColor = #colorLiteral(red: 0.07057534903, green: 0.07059565932, blue: 0.07057406753, alpha: 1)
         
