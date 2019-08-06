@@ -77,7 +77,7 @@ extension VideoSelectionViewController: UITableViewDataSource {
             
             if cellRect.minY > -1 && cellRect.minY < cellRect.height {
                 
-                cell.play(video: videoManager.videoAt(index: indexPath.row))
+                cell.play()
                 currentlyPlayingIndexPath = indexPath
                 
             } else {

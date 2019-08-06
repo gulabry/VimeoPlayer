@@ -111,17 +111,12 @@ class VideoTableViewCell : UITableViewCell, ViewScalable {
                     VideoManager.shared.addThumbnail(image: image, for: video.link)
                 })
             }
-        }
-    }
-    
-    func play(video: Video) {
-        //  streaming the lowest quality video for bandwidth purposes
-        //
-        if let videoURL = video.streamURL {
-            let playerItem = AVPlayerItem(asset: AVAsset(url: videoURL))
-            DispatchQueue.main.async {
-                self.videoPlayerView.player = AVPlayer(playerItem: playerItem)
-                self.play()
+            
+            if let videoURL = video.streamURL {
+                let playerItem = AVPlayerItem(asset: AVAsset(url: videoURL))
+                DispatchQueue.main.async {
+                    self.videoPlayerView.player = AVPlayer(playerItem: playerItem)
+                }
             }
         }
     }
