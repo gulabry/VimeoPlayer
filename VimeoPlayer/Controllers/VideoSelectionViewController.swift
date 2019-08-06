@@ -61,6 +61,7 @@ extension VideoSelectionViewController: UITableViewDataSource {
         let video = videoManager.videoAt(index: indexPath.row)
         
         cell.setup(with: video)
+        cell.load(video: video)
         
         return cell
     }

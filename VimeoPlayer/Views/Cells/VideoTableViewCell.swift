@@ -88,8 +88,6 @@ class VideoTableViewCell : UITableViewCell, ViewScalable {
         if let image = VideoManager.shared.thumbnailImages[video.link] {
             videoPlayerView.thumbnailImageView.image = image
         }
-        
-        load(video: video)
     }
     
     func load(video: Video) {
