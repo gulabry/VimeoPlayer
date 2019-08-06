@@ -11,6 +11,8 @@ import AVKit
 
 class VideoPageViewController: UIViewController {
     
+    static let identifier = "VideoPageViewController"
+    
     var videoControllers: [AVPlayerViewController]!
     var startingVideo: Video!
     
@@ -22,9 +24,13 @@ class VideoPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    
+    func setup() {
         
         videoControllers =  VideoManager.shared.videos.map { createPlayer(for: $0) }
-
+        
         if let pageController = children.first as? UIPageViewController {
             pageViewController = pageController
             pageViewController.delegate = self
@@ -42,7 +48,27 @@ class VideoPageViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func playPauseVideo(_ sender: UIButton) {
+        playPauseVideo()
+    }
+    
     @IBAction func muteVideos(_ sender: UIButton) {
+        muteVideos()
+    }
+    
+    func playPauseVideo() {
+        let vc = pageViewController.viewControllers?.last as! AVPlayerViewController
+        
+        if vc.player?.rate == 0.0 {
+            vc.player?.play()
+            pausePlayButton.setImage(UIImage(named: "pause")!, for: .normal)
+        } else {
+            vc.player?.pause()
+            pausePlayButton.setImage(UIImage(named: "play")!, for: .normal)
+        }
+    }
+    
+    func muteVideos() {
         let vc = pageViewController.viewControllers?.last as! AVPlayerViewController
         if vc.player?.volume == 0.0 {
             vc.player?.volume = 1.0
@@ -53,16 +79,9 @@ class VideoPageViewController: UIViewController {
         }
     }
     
-    @IBAction func playPauseVideo(_ sender: UIButton) {
-        let vc = pageViewController.viewControllers?.last as! AVPlayerViewController
-        
-        if vc.player?.rate == 0.0 {
-            vc.player?.play()
-            pausePlayButton.setImage(UIImage(named: "pause")!, for: .normal)
-        } else {
-            vc.player?.pause()
-            pausePlayButton.setImage(UIImage(named: "play")!, for: .normal)
-        }
+    func resetPlayerUI() {
+        pausePlayButton.setImage(UIImage(named: "pause")!, for: .normal)
+        muteButton.tintColor = UIColor.white
     }
     
     func createPlayer(for video: Video) -> AVPlayerViewController {
@@ -108,18 +127,14 @@ extension VideoPageViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-//        for vc in previousViewControllers {
-//            let vc = vc as! AVPlayerViewController
-//            vc.player?.pause()
-//        }
-//
         if completed {
+    
+            resetPlayerUI()
+            
             for vc in previousViewControllers {
                 let vc = vc as! AVPlayerViewController
                 vc.player?.pause()
             }
-//            let vc = previousViewControllers.last as! AVPlayerViewController
-//            vc.player?.play()
         }
     }
 }

@@ -130,7 +130,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="Yfz-Sv-2lO" id="ULA-WX-Tqq"/>
-                        <segue destination="ZnA-uz-cXw" kind="presentation" identifier="scaleSegue" customClass="ScaleSegue" customModule="VimeoPlayer" customModuleProvider="target" modalPresentationStyle="formSheet" id="CH9-HO-vcM"/>
+                        <segue destination="ZnA-uz-cXw" kind="presentation" identifier="VideoPageViewController" customClass="ScaleSegue" customModule="VimeoPlayer" customModuleProvider="target" modalPresentationStyle="formSheet" id="CH9-HO-vcM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -62,12 +62,17 @@ class VideoTableViewCell : UITableViewCell, ViewScalable {
         likeButton.tintColor = #colorLiteral(red: 0.07057534903, green: 0.07059565932, blue: 0.07057406753, alpha: 1)
     }
     
-    func setup(with video: Video) {
-        likeButton.tintColor = #colorLiteral(red: 0.07057534903, green: 0.07059565932, blue: 0.07057406753, alpha: 1)
-        dislikeButton.tintColor = #colorLiteral(red: 0.07057534903, green: 0.07059565932, blue: 0.07057406753, alpha: 1)
+    override func prepareForReuse() {
+        isSelected = false
+        isHighlighted = false
         
         videoPlayerView.thumbnailImageView.image = nil
         videoPlayerView.player = nil
+    }
+    
+    func setup(with video: Video) {
+        likeButton.tintColor = #colorLiteral(red: 0.07057534903, green: 0.07059565932, blue: 0.07057406753, alpha: 1)
+        dislikeButton.tintColor = #colorLiteral(red: 0.07057534903, green: 0.07059565932, blue: 0.07057406753, alpha: 1)
         
         videoTitleLabel.text = video.name
         videoSubtitleLabel.text = video.description
@@ -84,14 +89,16 @@ class VideoTableViewCell : UITableViewCell, ViewScalable {
             videoPlayerView.thumbnailImageView.image = image
         }
         
-        if let videoURL = video.streamURL {
-            videoPlayerView.player = AVPlayer(playerItem: AVPlayerItem(asset: AVAsset(url: videoURL)))
-        } else {
-            load(video: video)
-        }
+        load(video: video)
     }
     
     func load(video: Video) {
+        
+        if let videoURL = video.streamURL {
+            videoPlayerView.player = AVPlayer(playerItem: AVPlayerItem(asset: AVAsset(url: videoURL)))
+            play()
+            return
+        }
         
         video.getMetadata {
             
@@ -104,14 +111,17 @@ class VideoTableViewCell : UITableViewCell, ViewScalable {
                     VideoManager.shared.addThumbnail(image: image, for: video.link)
                 })
             }
-            
-            //  streaming the lowest quality video for bandwidth purposes
-            //
-            if let videoURL = video.streamURL {
-                let playerItem = AVPlayerItem(asset: AVAsset(url: videoURL))
-                DispatchQueue.main.async {
-                    self.videoPlayerView.player = AVPlayer(playerItem: playerItem)
-                }
+        }
+    }
+    
+    func play(video: Video) {
+        //  streaming the lowest quality video for bandwidth purposes
+        //
+        if let videoURL = video.streamURL {
+            let playerItem = AVPlayerItem(asset: AVAsset(url: videoURL))
+            DispatchQueue.main.async {
+                self.videoPlayerView.player = AVPlayer(playerItem: playerItem)
+                self.play()
             }
         }
     }

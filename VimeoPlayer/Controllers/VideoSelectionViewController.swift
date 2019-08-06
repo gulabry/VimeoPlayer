@@ -38,7 +38,7 @@ class VideoSelectionViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ScaleSegue.identifier {
+        if segue.identifier == VideoPageViewController.identifier {
             guard let indexPath = sender as? IndexPath else { return }
             let vc = segue.destination as? VideoPageViewController
             vc?.startingVideo = videoManager.videoAt(index: indexPath.row)
@@ -67,18 +67,19 @@ extension VideoSelectionViewController: UITableViewDataSource {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        guard let tableView = scrollView as? UITableView else { return }
+        guard let indexPaths = tableView.indexPathsForVisibleRows else { return }
         
-        for cell in tableView.visibleCells {
+        for indexPath in indexPaths {
             
-            guard let cell = cell as? VideoTableViewCell,
-                let indexPath = tableView.indexPath(for: cell) else { return }
+            guard let cell = tableView.cellForRow(at: indexPath) as? VideoTableViewCell else { return }
             
             let cellRect = tableView.rectForRow(at: indexPath).offsetBy(dx: -tableView.contentOffset.x, dy: -tableView.contentOffset.y)
             
             if cellRect.minY > -1 && cellRect.minY < cellRect.height {
-                cell.play()
+                
+                cell.play(video: videoManager.videoAt(index: indexPath.row))
                 currentlyPlayingIndexPath = indexPath
+                
             } else {
                 cell.pause()
             }
@@ -89,7 +90,7 @@ extension VideoSelectionViewController: UITableViewDataSource {
 extension VideoSelectionViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        performSegue(withIdentifier: ScaleSegue.identifier, sender: indexPath)
+        performSegue(withIdentifier: VideoPageViewController.identifier, sender: indexPath)
         
         //  stop what's currently playing
         //
@@ -97,6 +98,8 @@ extension VideoSelectionViewController: UITableViewDelegate {
             let cell = tableView.cellForRow(at: indexPath) as? VideoTableViewCell {
             cell.pause()
         }
+        
+        currentlyPlayingIndexPath = indexPath
     }
 }
 

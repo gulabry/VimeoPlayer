@@ -43,7 +43,7 @@ class Video: Codable, Equatable {
                 self.thumbnailURL = thumbnailURL
             }
             
-            if let videoURL = (videoFile?.videoURL.values.compactMap { $0 }.first) {
+            if let videoURL = (videoFile?.videoURL.values.compactMap { $0 }.last) {
                 self.streamURL = videoURL
             }
             
