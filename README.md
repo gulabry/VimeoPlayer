@@ -1,7 +1,5 @@
 # VimeoPlayer
 
-- Disclosure: Some videos from the Vimeo API do not load properally.
-
 ### Architecture:
 
 - I am using a basic MVC style along with certain manager classes to handle loading of assets and model data.
@@ -16,5 +14,5 @@
 
 - Adding KVO on the AVPlayers in the PageViewController that holds all the Videos such that it would remember all the status' of the player state: play/pause/mute.
 
-- I would build a custom VimeoAPI parser instead of using a Cocoapod, I realized it was not as straight forward of a streaming API as I initially thought.
+- I would build a custom VimeoAPI parser instead of using a Cocoapod, I realized it was not as straight forward of a streaming API as I initially thought. And there are many async network calls I would like to remove.
 
